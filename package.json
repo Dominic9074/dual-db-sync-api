@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/Dominic9074/dual-db-sync-api#readme",
   "dependencies": {
+    "dotenv": "^18.0.2",
     "express": "^5.2.1",
+    "mongoose": "^9.10.1",
     "typescript": "^7.0.2"
   },
   "devDependencies": {

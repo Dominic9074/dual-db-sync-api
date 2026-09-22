@@ -1,4 +1,5 @@
 import express from 'express'
+import { connectMongoDB } from './infrastructure/database/mongo/connection';
 
 const app = express();
 
@@ -11,6 +12,16 @@ app.use("/",(req,res)=>{
     })
 })
 
-app.listen(5000,()=>{
-    console.log('Server running on http://localhost:5000')
-})
+const startServer=async ()=>{
+    try{
+        await connectMongoDB();
+        app.listen(5000,()=>{
+            console.log('Server running on http://localhost:5000')
+        })
+    }catch(error){
+        console.error(error);
+        process.exit(1)
+    }
+}
+
+startServer();
