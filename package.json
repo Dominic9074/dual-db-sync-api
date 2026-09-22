@@ -1,0 +1,31 @@
+{
+  "name": "dual-db-sync",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dominic9074/dual-db-sync-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Dominic9074/dual-db-sync-api/issues"
+  },
+  "homepage": "https://github.com/Dominic9074/dual-db-sync-api#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "typescript": "^7.0.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "tsx": "^4.23.15"
+  }
+}
