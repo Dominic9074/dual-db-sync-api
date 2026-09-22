@@ -1,5 +1,6 @@
 import express from 'express'
 import { connectMongoDB } from './infrastructure/database/mongo/connection';
+import { connectMySQL } from './infrastructure/database/sql/connect';
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use("/",(req,res)=>{
 const startServer=async ()=>{
     try{
         await connectMongoDB();
+        await connectMySQL();
+
         app.listen(5000,()=>{
             console.log('Server running on http://localhost:5000')
         })
