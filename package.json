@@ -29,7 +29,8 @@
     "mongoose": "^9.10.1",
     "mysql2": "^3.24.4",
     "typeorm": "^1.1.1",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
