@@ -1,12 +1,17 @@
-import {User} from '../entities/user'
+import {User, userRole} from '../entities/user'
 
+export interface CreateUserData {
+  email: string;
+  password: string;
+  role: userRole;
+}
 
 export interface IUserRepository{
     findById(id:string):Promise<User | null>;
 
     findByEmail(email:string):Promise<User | null>;
 
-    create(user:User):Promise<User>;
+    create(user:CreateUserData):Promise<User>;
 
     update(id:string,data:Partial<User>):Promise<User | null>;
 

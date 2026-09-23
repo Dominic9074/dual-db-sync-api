@@ -1,7 +1,13 @@
-import { User } from "../../../../domain/entities/user";
+import { User, userRole } from "../../../../domain/entities/user";
 import { IUserRepository } from "../../../../domain/repositories/IuserRepository";
 import { UserModel } from "../models/UserModel";
 
+
+export interface CreateUserData {
+  email: string;
+  password: string;
+  role: userRole;
+}
 
 export class MongoUserRepository implements IUserRepository{
     async findById(id: string): Promise<User | null> {
@@ -38,7 +44,7 @@ export class MongoUserRepository implements IUserRepository{
         };
     }
 
-    async create(user: User): Promise<User> {
+    async create(user: CreateUserData): Promise<User> {
         const createdUser =await UserModel.create({
             email:user.email,
             password:user.password,

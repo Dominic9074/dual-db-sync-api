@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/Dominic9074/dual-db-sync-api#readme",
   "dependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "bcrypt": "^6.0.0",
     "dotenv": "^18.0.2",
     "express": "^5.2.1",
     "mongoose": "^9.10.1",
