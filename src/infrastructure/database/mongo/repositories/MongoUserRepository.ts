@@ -82,7 +82,7 @@ export class MongoUserRepository implements IUserRepository{
             return null;
         }
 
-        return {
+        const user: User = {
             id: updatedUser._id.toString(),
             email: updatedUser.email,
             password: updatedUser.password,
@@ -91,12 +91,34 @@ export class MongoUserRepository implements IUserRepository{
             updatedAt: updatedUser.updatedAt,
         };
 
+        publishUserEvent({
+            type: "user.updated",
+            userId: user.id,
+            data: {
+            email: user.email,
+            password: user.password,
+            role: user.role,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+            },
+        });
+
+        return user;
     }
 
     async delete(id: string): Promise<boolean> {
-        const deletedUser=await UserModel.findByIdAndDelete(id);
+        const result=await UserModel.findByIdAndDelete(id);
 
-        return deletedUser !==null;
+       if (!result) {
+            return false;
+        }
+
+        publishUserEvent({
+            type: "user.deleted",
+            userId: id,
+        });
+
+        return true;
     }
 }
 

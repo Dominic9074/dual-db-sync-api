@@ -4,6 +4,7 @@ import { connectMySQL } from './infrastructure/database/sql/connect';
 import userRoutes from '../src/presentation/routes/user.routes'
 import authRoutes from '../src/presentation/routes/auth.routes'
 import { connectRabbitMQ } from "./infrastructure/messaging/rabbitmq/connection";
+import { startUserSyncConsumer } from "./infrastructure/database/sync/userSyncConsumer";
 import "reflect-metadata";
 import "dotenv/config";
 
@@ -26,6 +27,7 @@ const startServer=async ()=>{
         await connectMongoDB();
         await connectMySQL();
         await connectRabbitMQ();
+        await startUserSyncConsumer();
 
         app.listen(5000,()=>{
             console.log('Server running on http://localhost:5000')
