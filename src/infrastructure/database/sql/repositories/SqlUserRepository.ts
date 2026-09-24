@@ -69,6 +69,20 @@ export class SqlUserRepository implements IUserRepository {
     return (result.affected ?? 0) > 0;
   }
 
+  async upsertUser(user: User): Promise<void> {
+    await this.repository.upsert(
+        {
+        id: user.id,
+        email: user.email,
+        password: user.password,
+        role: user.role,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        },
+        ["id"]
+    );
+    }
+
   private toDomain(user: UserEntity): User {
     return {
       id: user.id,
