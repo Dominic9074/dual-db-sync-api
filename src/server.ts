@@ -3,6 +3,9 @@ import { connectMongoDB } from './infrastructure/database/mongo/connection';
 import { connectMySQL } from './infrastructure/database/sql/connect';
 import userRoutes from '../src/presentation/routes/user.routes'
 import authRoutes from '../src/presentation/routes/auth.routes'
+import { connectRabbitMQ } from "./infrastructure/messaging/rabbitmq/connection";
+import "reflect-metadata";
+import "dotenv/config";
 
 const app = express();
 
@@ -22,6 +25,7 @@ const startServer=async ()=>{
     try{
         await connectMongoDB();
         await connectMySQL();
+        await connectRabbitMQ();
 
         app.listen(5000,()=>{
             console.log('Server running on http://localhost:5000')

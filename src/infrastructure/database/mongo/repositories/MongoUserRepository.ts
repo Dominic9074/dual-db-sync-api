@@ -1,7 +1,7 @@
 import { User, userRole } from "../../../../domain/entities/user";
 import { IUserRepository } from "../../../../domain/repositories/IuserRepository";
 import { UserModel } from "../models/UserModel";
-
+import { publishUserEvent } from "../../../messaging/rabbitmq/publisher";
 
 export interface CreateUserData {
   email: string;
@@ -44,14 +44,14 @@ export class MongoUserRepository implements IUserRepository{
         };
     }
 
-    async create(user: CreateUserData): Promise<User> {
+    async create(data: CreateUserData): Promise<User> {
         const createdUser =await UserModel.create({
-            email:user.email,
-            password:user.password,
-            role:user.role,
+            email:data.email,
+            password:data.password,
+            role:data.role,
         })
 
-        return {
+        const user: User = {
             id: createdUser._id.toString(),
             email: createdUser.email,
             password: createdUser.password,
@@ -59,6 +59,20 @@ export class MongoUserRepository implements IUserRepository{
             createdAt: createdUser.createdAt,
             updatedAt: createdUser.updatedAt,
         };
+
+        publishUserEvent({
+            type: "user.created",
+            userId: user.id,
+            data: {
+            email: user.email,
+            password: user.password,
+            role: user.role,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+            },
+        });
+
+        return user;
     }
 
     async update(id: string, data: Partial<User>): Promise<User | null> {
